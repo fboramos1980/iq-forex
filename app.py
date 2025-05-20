@@ -57,13 +57,24 @@ st.title("📈 Sinais Forex com MACD, RSI e Bandas de Bollinger")
 
 symbol = st.text_input("Digite o símbolo do ativo (ex: EURUSD=X)", value="EURUSD=X")
 interval = st.selectbox("Intervalo de tempo", ["1m", "5m", "15m"])
-
 if st.button("Gerar sinal"):
     try:
-        df = yf.download(tickers=symbol, period="5d", interval=interval)
+        df = yf.download(tickers=symbol, period="5d", interval=interval)  # aumentei período pra garantir dados
         if df.empty:
             st.error("Nenhum dado disponível para o símbolo e intervalo informados.")
         else:
+            # Mostrar os dados para debug (opção 5)
+            macd, signal_line = MACD(df)
+            rsi = RSI(df)
+            upper_band, lower_band = Bollinger_Bands(df)
+            
+            st.write(f"Último MACD: {macd.iloc[-1]:.4f}")
+            st.write(f"Último Signal: {signal_line.iloc[-1]:.4f}")
+            st.write(f"Último RSI: {rsi.iloc[-1]:.2f}")
+            st.write(f"Última Close: {df['Close'].iloc[-1]:.4f}")
+            st.write(f"Banda Superior: {upper_band.iloc[-1]:.4f}")
+            st.write(f"Banda Inferior: {lower_band.iloc[-1]:.4f}")
+            
             sinal = gerar_sinal(df)
             st.write(f"### Sinal para {symbol} no intervalo {interval}: **{sinal}**")
     except Exception as e:
