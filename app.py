@@ -78,4 +78,4 @@ if st.button("Gerar sinal"):
             sinal = gerar_sinal(df)
             st.write(f"### Sinal para {symbol} no intervalo {interval}: **{sinal}**")
     except Exception as e:
-        st.error(f"Erro ao buscar dados: {e}")
+        st.error(f"Erro ao buscar dados: {e}"
