@@ -60,7 +60,7 @@ interval = st.selectbox("Intervalo de tempo", ["1m", "5m", "15m"])
 
 if st.button("Gerar sinal"):
     try:
-        df = yf.download(tickers=symbol, period="1d", interval=interval)
+        df = yf.download(tickers=symbol, period="5d", interval=interval)
         if df.empty:
             st.error("Nenhum dado disponível para o símbolo e intervalo informados.")
         else:
